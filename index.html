@@ -1,187 +1,563 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 新增视口适配 -->
-  <title>R.I.P.</title>
-  <style>
-    h1, h2, h3 {
-      text-align: center;
-      font-family: 'KaiTi', sans-serif;
-      margin: 10px 0;
-    }
-    .clock {
-      padding: 15px 20px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      background-color: #f9f9f9;
-      width: 60%;
-      margin: 20px auto;
-      font-size: 18px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    }
-    .btn {
-      font-size: 16px;
-      font-family: Arial, sans-serif;
-      width: 160px;
-      height: 55px;
-      border: 1px solid #d6bcd6;
-      color: #fff;
-      font-weight: bold;
-      border-radius: 15px;
-      box-shadow: 3px 4px 0px 0px #899599;
-      text-shadow: 0px 1px 0px #e1e2ed;
-      background: linear-gradient(rgba(222, 155, 97, 1), #bab1ba);
-      display: block;
-      margin: 20px auto;
-      text-align: center;
-      line-height: 55px;
-      text-decoration: none;
-      transition: all 0.2s;
-      cursor: pointer;
-    }
-    .btn:hover {
-      transform: translateY(2px);
-      box-shadow: 1px 2px 0px 0px #899599;
-    }
-    #backToTop {
-      font-size: 28px;
-      width: 200px;
-      height: 100px;
-      border-width: 10px;
-      color: #3a8a9e;
-      border-color: #d6bcd6;
-      font-weight: bold;
-      border-radius: 50px;
-      box-shadow: 1px 1px 0px 1px #899599;
-      text-shadow: 0px 1px 0px #e1e2ed;
-      background: linear-gradient(#ededed, #bab1ba);
-      cursor: pointer;
-    }
-    #backToTop:hover {
-      background: linear-gradient(#bab1ba, #ededed);
-    }
-    ol {
-      max-width: 600px;
-      margin: 0 auto 30px;
-      padding-left: 20px;
-    }
-    ol li {
-      margin-bottom: 15px;
-      line-height: 1.6;
-    }
-    
-    /* 手机端响应式适配（屏幕宽度<600px时生效） */
-    @media (max-width: 600px) {
-      .clock, ol {
-        width: 90%;
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实验中学R.I.P.</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#8B4513',
+            secondary: '#1E88E5',
+            accent: '#FF6B6B',
+            neutral: '#F5F5F5',
+            'neutral-dark': '#333333',
+            'primary-light': '#A67C52',
+            'primary-dark': '#603813',
+            'secondary-light': '#64B5F6',
+            'accent-light': '#FF9E9E'
+          },
+          fontFamily: {
+            serif: ['Noto Serif SC', 'serif'],
+            sans: ['Inter', 'sans-serif']
+          },
+          boxShadow: {
+            'elegant': '0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03)',
+            'elegant-hover': '0 20px 35px -10px rgba(0, 0, 0, 0.1), 0 10px 15px -5px rgba(0, 0, 0, 0.05)'
+          }
+        }
       }
-      .btn {
-        width: 140px;
-        height: 50px;
-        font-size: 14px;
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .text-shadow {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
       }
-      h1 {
-        font-size: 24px;
+      .hover-scale {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
       }
-      h2 {
-        font-size: 22px;
+      .hover-scale:hover {
+        transform: translateY(-5px) scale(1.01);
       }
-      h3 {
-        font-size: 18px;
+      .animate-float {
+        animation: float 6s ease-in-out infinite;
       }
-      #backToTop {
-        width: 150px;
-        height: 80px;
-        font-size: 24px;
+      @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+      }
+      .bg-blur {
+        backdrop-filter: blur(8px);
+      }
+      .text-gradient {
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        background-image: linear-gradient(90deg, #8B4513, #1E88E5);
+      }
+      .content-auto {
+        content-visibility: auto;
+      }
+      .card-transition {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .shine-effect {
+        position: relative;
+        overflow: hidden;
+      }
+      .shine-effect::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+          to bottom right,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.3) 50%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        transform: rotate(30deg);
+        animation: shine 6s infinite;
+      }
+      @keyframes shine {
+        0% { transform: translateX(-100%) rotate(30deg); }
+        20% { transform: translateX(100%) rotate(30deg); }
+        100% { transform: translateX(100%) rotate(30deg); }
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .poem-line {
+        position: relative;
+        padding-left: 2rem;
+        margin-bottom: 1.25rem;
+        transition: all 0.3s ease;
+        text-align: justify;
+        text-justify: inter-ideograph;
+        cursor: pointer;
+      }
+      .poem-line::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+        background-color: #8B4513;
+        opacity: 0.7;
+        transition: all 0.3s ease;
+      }
+      .poem-line:hover::before {
+        opacity: 1;
+        transform: translateY(-50%) scale(1.3);
+      }
+      .poem-line:hover {
+        transform: translateX(5px);
+        color: #1F2937;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      }
+      .parallax-bg {
+        transform: translateZ(0);
+        will-change: transform;
+      }
+      .bg-pattern {
+        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%238b4513' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+      }
+      .falling-leaf {
+        position: absolute;
+        pointer-events: none;
+        background-size: contain;
+        background-repeat: no-repeat;
+        animation: falling linear forwards;
+      }
+      @keyframes falling {
+        0% {
+          transform: translateY(-10px) rotate(0deg);
+          opacity: 0.9;
+        }
+        100% {
+          transform: translateY(calc(100vh + 50px)) rotate(360deg);
+          opacity: 0;
+        }
+      }
+      .fade-in {
+        animation: fadeIn 0.8s ease-in forwards;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      .pulse-light {
+        animation: pulseLight 2s infinite;
+      }
+      @keyframes pulseLight {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+      }
+      .hover-glow {
+        transition: all 0.3s ease;
+      }
+      .hover-glow:hover {
+        box-shadow: 0 0 15px rgba(139, 69, 19, 0.4);
+      }
+      .text-float {
+        display: inline-block;
+        animation: textFloat 4s ease-in-out infinite;
+      }
+      @keyframes textFloat {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+      }
+      .bg-animated {
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+      }
+      @keyframes gradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
       }
     }
   </style>
 </head>
-<body>
-  <div class="clock" id="myClock">加载时间中...</div>
+<body class="bg-pattern font-sans overflow-x-hidden">
+  <!-- 加载指示器 -->
+  <div id="loadingIndicator" class="fixed inset-0 flex items-center justify-center bg-white z-50">
+    <div class="flex flex-col items-center">
+      <div class="w-16 h-16 border-4 border-primary/30 border-t-primary rounded-full animate-spin mb-4"></div>
+      <p class="text-primary font-medium">页面加载中...</p>
+      <p id="loadingStatus" class="text-gray-500 text-sm mt-2">初始化中...</p>
+    </div>
+  </div>
+
+  <!-- 落叶容器 -->
+  <div id="leavesContainer" class="fixed inset-0 pointer-events-none z-0"></div>
+
+  <!-- 基础内容区域 -->
+  <div class="container mx-auto px-4 py-8 relative z-10">
+    <!-- 标题区域 -->
+    <header class="mb-12 text-center reveal">
+      <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-primary text-shadow mb-4">
+        <span class="text-float" style="animation-delay: 0s">实</span>
+        <span class="text-float" style="animation-delay: 0.1s">验</span>
+        <span class="text-float" style="animation-delay: 0.2s">中</span>
+        <span class="text-float" style="animation-delay: 0.3s">学</span>
+        <span class="text-float" style="animation-delay: 0.4s">R</span>
+        <span class="text-float" style="animation-delay: 0.5s">.</span>
+        <span class="text-float" style="animation-delay: 0.6s">I</span>
+        <span class="text-float" style="animation-delay: 0.7s">.</span>
+        <span class="text-float" style="animation-delay: 0.8s">P</span>
+        <span class="text-float" style="animation-delay: 0.9s">.</span>
+      </h1>
+      <p class="text-[clamp(1.1rem,3vw,1.5rem)] text-gray-600 max-w-3xl mx-auto">回顾那些监狱时光与神人老师</p>
+    </header>
+    
+    <!-- 时钟组件 -->
+    <div class="bg-white rounded-xl p-6 shadow-elegant hover-scale hover-glow max-w-lg mx-auto mb-12 reveal">
+      <div class="flex items-center justify-center gap-4">
+        <i class="fa-solid fa-clock text-primary text-2xl pulse-light"></i>
+        <p id="currentTime" class="text-lg font-medium text-gray-700"></p>
+      </div>
+    </div>
+    
+    <!-- 诗歌区域 -->
+    <section class="bg-white rounded-xl p-8 shadow-elegant hover-scale hover-glow mb-12 reveal">
+      <div class="border-l-4 border-primary pl-4 mb-8">
+        <h2 class="text-2xl font-bold text-primary">希达之歌</h2>
+        <p class="text-gray-600">——致我们敬爱的老师</p>
+      </div>
+      
+      <div class="space-y-4 text-gray-700 poem-container">
+        <p class="poem-line">风掠过老槐树的枝桠</p>
+        <p class="poem-line">摇晃起教学楼前的银杏叶</p>
+        <p class="poem-line">您的身影，总在晨光里伫立</p>
+        <p class="poem-line">目送莘莘学子踏入知识的殿堂</p>
+        <p class="poem-line">课堂上，您的声音清朗</p>
+        <p class="poem-line">如清泉流淌在求知的心房</p>
+        <p class="poem-line">作业本上，红色批注似星火</p>
+        <p class="poem-line">点亮了无数迷茫的方向</p>
+        <p class="poem-line">运动会的呐喊，艺术节的欢唱</p>
+        <p class="poem-line">您的笑容比阳光还明亮</p>
+        <p class="poem-line">走廊里的踱步，办公室的灯光</p>
+        <p class="poem-line">藏着对教育最深沉的守望</p>
+        <p class="poem-line">如今，领导已将您带往远方</p>
+        <p class="poem-line">但您播下的种子正在生长</p>
+        <p class="poem-line">那棵您亲手栽种的玉兰树</p>
+        <p class="poem-line">年年绽放着思念的芬芳</p>
+        <p class="poem-line">您的教诲，是不灭的灯塔</p>
+        <p class="poem-line">在我们的人生航程中闪亮</p>
+        <p class="poem-line">老师，您永远是我们心中</p>
+        <p class="poem-line">最温暖的烛光，最坚实的臂膀</p>
+      </div>
+    </section>
+    
+    <!-- 纪念日期 -->
+    <div class="bg-white rounded-xl p-6 shadow-elegant hover-scale hover-glow max-w-md mx-auto mb-12 reveal">
+      <div class="flex flex-col items-center">
+        <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+          <i class="fa-solid fa-calendar text-primary text-xl pulse-light"></i>
+        </div>
+        <h3 class="text-xl font-bold text-primary mb-2">制作日期</h3>
+        <p class="text-2xl font-bold text-primary-dark">2025/6/18</p>
+      </div>
+    </div>
+    
+    <!-- 照片链接 -->
+    <div class="text-center mb-12 reveal">
+      <a href="https://ibb.co/Z1cqpnd5" target="_blank" class="inline-flex items-center justify-center bg-gradient-to-r from-primary to-primary-dark text-white px-8 py-3 rounded-full font-medium shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 hover:scale-105 hover-glow bg-animated">
+        <i class="fa-solid fa-images mr-2"></i> 点击查看希达帅照
+      </a>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer class="bg-gray-800 text-white py-8 mt-16">
+      <div class="text-center">
+        <p class="mb-2">实验中学 · 最强监狱</p>
+        <p class="text-gray-400 text-sm">铭记那些监狱时光</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- 返回顶部按钮 -->
+  <button id="backToTop" class="fixed bottom-6 right-6 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg z-50 opacity-0 transition-opacity duration-300 hover-glow">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
   <script>
-    function updateTime() {
-      const now = new Date();
-      const timeStr = now.toLocaleString('zh-CN', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        weekday: 'long'
+    // 显示加载指示器
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    const loadingStatus = document.getElementById('loadingStatus');
+    
+    function updateLoadingStatus(message) {
+      if (loadingStatus) {
+        loadingStatus.textContent = message;
+      }
+    }
+    
+    // 错误处理
+    window.onerror = function(message, source, lineno, colno, error) {
+      console.error('Error occurred:', message, 'at', source, 'line', lineno);
+      if (error && error.stack) {
+        console.error('Stack trace:', error.stack);
+      }
+      updateLoadingStatus(`加载错误: ${message}`);
+      // 隐藏加载指示器
+      hideLoadingIndicator();
+      // 尝试显示内容
+      document.querySelectorAll('.reveal').forEach(el => {
+        el.classList.add('active');
       });
-      document.getElementById('myClock').textContent = `当前时间：${timeStr}`;
+      return true;
+    };
+    
+    // 隐藏加载指示器
+    function hideLoadingIndicator() {
+      if (loadingIndicator) {
+        loadingIndicator.classList.add('opacity-0', 'pointer-events-none');
+        setTimeout(() => {
+          loadingIndicator.classList.add('hidden');
+        }, 500);
+      }
+    }
+    
+    // 确保加载指示器在一定时间后总是被隐藏
+    setTimeout(() => {
+      updateLoadingStatus('加载完成，正在准备内容...');
+      hideLoadingIndicator();
+    }, 1000); // 1秒后强制隐藏
+    
+    // 初始化页面
+    document.addEventListener('DOMContentLoaded', () => {
+      try {
+        updateLoadingStatus('加载页面内容...');
+        
+        // 创建落叶效果
+        createFallingLeaves();
+        
+        // 隐藏加载指示器
+        setTimeout(() => {
+          hideLoadingIndicator();
+          
+          // 确保内容显示
+          setTimeout(() => {
+            document.querySelectorAll('.reveal').forEach(el => {
+              el.classList.add('active');
+            });
+          }, 300);
+        }, 500);
+      } catch (error) {
+        console.error('初始化过程中发生错误:', error);
+        updateLoadingStatus(`错误: ${error.message}`);
+        // 确保即使出错也隐藏加载指示器
+        setTimeout(hideLoadingIndicator, 1000);
+      }
+    });
+    
+    // 落叶效果 - 优化版
+    function createFallingLeaves() {
+      try {
+        const container = document.getElementById('leavesContainer');
+        if (!container) return;
+        
+        // 定义更逼真的叶子形状
+        const leafTypes = [
+          // 枫叶形状
+          {
+            color: '#8B4513', // 棕色
+            path: 'M50,0 C60,20 90,20 100,40 C110,60 100,80 90,90 C100,100 110,120 90,130 C80,140 60,140 50,150 C40,140 20,140 10,130 C-10,120 0,100 10,90 C0,80 -10,60 0,40 C10,20 40,20 50,0'
+          },
+          // 银杏叶形状
+          {
+            color: '#D2691E', // 赭石色
+            path: 'M50,0 C70,20 80,40 90,60 C100,80 90,100 80,110 C70,120 60,130 50,130 C40,130 30,120 20,110 C10,100 0,80 10,60 C20,40 30,20 50,0 C50,0 50,0 50,0'
+          },
+          // 梧桐叶形状
+          {
+            color: '#228B22', // 深绿色
+            path: 'M50,0 C70,10 90,30 100,50 C110,70 100,90 90,110 C100,130 80,150 60,160 C50,170 40,160 30,150 C10,130 20,110 10,90 C0,70 10,50 20,30 C30,10 50,0 50,0'
+          }
+        ];
+        
+        // 创建叶子函数
+        function createLeaf() {
+          try {
+            const leaf = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            
+            // 随机选择叶子类型
+            const leafType = leafTypes[Math.floor(Math.random() * leafTypes.length)];
+            
+            // 设置SVG属性
+            leaf.setAttribute('viewBox', '0 0 150 170');
+            leaf.setAttribute('class', 'falling-leaf');
+            leaf.style.width = `${Math.random() * 30 + 20}px`; // 更大的叶子尺寸范围
+            leaf.style.left = `${Math.random() * 100}vw`;
+            leaf.style.opacity = `${Math.random() * 0.5 + 0.4}`; // 略微降低透明度
+            leaf.style.animationDuration = `${Math.random() * 15 + 10}s`; // 更长的下落时间
+            
+            // 添加闪烁效果
+            const blinkDuration = Math.random() * 3 + 2; // 2-5秒
+            leaf.style.animation = `falling ${leaf.style.animationDuration}s linear forwards, blink ${blinkDuration}s infinite alternate`;
+            
+            // 设置路径属性
+            path.setAttribute('d', leafType.path);
+            path.setAttribute('fill', leafType.color);
+            path.setAttribute('fill-opacity', '0.8');
+            
+            // 添加路径到SVG
+            leaf.appendChild(path);
+            
+            // 添加到容器
+            container.appendChild(leaf);
+            
+            // 动画结束后移除叶子
+            setTimeout(() => {
+              if (container.contains(leaf)) {
+                container.removeChild(leaf);
+              }
+            }, parseFloat(leaf.style.animationDuration) * 1000);
+          } catch (error) {
+            console.error('创建落叶时出错:', error);
+          }
+        }
+        
+        // 添加闪烁动画
+        const style = document.createElement('style');
+        style.textContent = `
+          @keyframes blink {
+            0% { opacity: 0.7; }
+            100% { opacity: 0.9; }
+          }
+        `;
+        document.head.appendChild(style);
+        
+        // 定期创建新叶子
+        setInterval(createLeaf, 300); // 增加叶子生成频率
+        
+        // 初始创建一些叶子
+        for (let i = 0; i < 30; i++) {
+          setTimeout(createLeaf, i * 150);
+        }
+      } catch (error) {
+        console.error('初始化落叶效果时出错:', error);
+      }
+    }
+    
+    // 时钟功能
+    function updateTime() {
+      try {
+        const now = new Date();
+        const timeStr = now.toLocaleString('zh-CN', {
+          year: 'numeric', month: '2-digit', day: '2-digit',
+          hour: '2-digit', minute: '2-digit', second: '2-digit',
+          weekday: 'long'
+        });
+        document.getElementById('currentTime').textContent = `当前时间：${timeStr}`;
+      } catch (error) {
+        console.error('更新时间时出错:', error);
+      }
     }
     updateTime();
     setInterval(updateTime, 1000);
-  </script>
-  <hr style="margin: 30px 0;">
-  <h1 style="color:darkred; background:skyblue; font-weight: bold; padding: 10px 0;">
-    实验中学R.I.P.
-  </h1>
-  <hr style="margin: 30px 0;">
-  <h2 style="color:darkblue; font-weight: bold; font-size: 28px;">
-    <big>希达之歌</big>
-  </h2>
-  <h3 style="color:pink; font-weight: bold; font-size: 22px; margin-bottom: 30px;">
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;By 豆包
-  </h3>
-  <ol style="color: blue; font-size: 18px;">
-    <li><p>风掠过老槐树的枝桠</p></li>
-    <li><p>摇晃起教学楼前的银杏叶</p></li>
-    <li><p>您的身影，总在晨光里伫立</p></li>
-    <li><p>目送莘莘学子踏入知识的殿堂</p></li>
-    <li><p>课堂上，您的声音清朗</p></li>
-    <li><p>如清泉流淌在求知的心房</p></li>
-    <li><p>作业本上，红色批注似星火</p></li>
-    <li><p>点亮了无数迷茫的方向</p></li>
-    <li><p>运动会的呐喊，艺术节的欢唱</p></li>
-    <li><p>您的笑容比阳光还明亮</p></li>
-    <li><p>走廊里的踱步，办公室的灯光</p></li>
-    <li><p>藏着对教育最深沉的守望</p></li>
-    <li><p>如今，领导已将您带往远方</p></li>
-    <li><p>但您播下的种子正在生长</p></li>
-    <li><p>那棵您亲手栽种的玉兰树</p></li>
-    <li><p>年年绽放着思念的芬芳</p></li>
-    <li><p>您的教诲，是不灭的灯塔</p></li>
-    <li><p>在我们的人生航程中闪亮</p></li>
-    <li><p>宋校长，您永远是我们心中</p></li>
-    <li><p>最温暖的月光，最坚实的脊梁</p></li>
-  </ol>
-  <h1 style="color:green; font-size: 24px; margin: 40px 0;">
-    -----------------宋希达想你了
-  </h1>
-  <hr style="margin: 30px 0;">
-  <a href="https://ibb.co/Z1cqpnd5" class="btn" target="_blank">
-    点击查看神秘人帅照
-  </a>
-  <hr style="margin: 30px 0;">
-  <span style="display: block; text-align: center; margin: 20px 0;">
-    <strong>
-      <big>
-        <p style="color:purple; font-size: 22px;">2025/6/18</p>
-      </big>
-    </strong>
-  </span>
-  <hr style="margin: 30px 0;">
-  <button id="backToTop" style="display: block; margin: 0 auto 50px;">
-    🔝
-  </button>
-  <script>
-    document.getElementById('backToTop').addEventListener('click', function() {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+    
+    // 滚动事件节流
+    function throttle(fn, delay) {
+      let lastCall = 0;
+      return function(...args) {
+        const now = new Date().getTime();
+        if (now - lastCall < delay) {
+          return;
+        }
+        lastCall = now;
+        return fn(...args);
+      };
+    }
+    
+    // 返回顶部按钮和滚动显示动画
+    const backToTopBtn = document.getElementById('backToTop');
+    
+    window.addEventListener('scroll', throttle(() => {
+      try {
+        if (window.pageYOffset > 300) {
+          backToTopBtn.classList.add('opacity-100');
+        } else {
+          backToTopBtn.classList.remove('opacity-100');
+        }
+        
+        // 滚动显示动画
+        const reveals = document.querySelectorAll('.reveal');
+        for (let i = 0; i < reveals.length; i++) {
+          const windowHeight = window.innerHeight;
+          const elementTop = reveals[i].getBoundingClientRect().top;
+          const elementVisible = 150;
+          if (elementTop < windowHeight - elementVisible) {
+            reveals[i].classList.add('active');
+          }
+        }
+      } catch (error) {
+        console.error('处理滚动事件时出错:', error);
+      }
+    }, 20));
+    
+    backToTopBtn.addEventListener('click', () => {
+      try {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      } catch (error) {
+        console.error('滚动到顶部时出错:', error);
+      }
+    });
+    
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        try {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth'
+            });
+          }
+        } catch (error) {
+          console.error('处理平滑滚动时出错:', error);
+        }
       });
     });
-    window.addEventListener('scroll', function() {
-      const backToTopBtn = document.getElementById('backToTop');
-      if (window.pageYOffset > 300) {
-        backToTopBtn.style.display = 'block';
-      } else {
-        backToTopBtn.style.display = 'none';
+    
+    // 确保页面加载完成后显示内容
+    window.addEventListener('load', () => {
+      try {
+        updateLoadingStatus('页面加载完成!');
+        // 隐藏加载指示器
+        setTimeout(hideLoadingIndicator, 500);
+        // 确保内容显示
+        setTimeout(() => {
+          document.querySelectorAll('.reveal').forEach(el => {
+            el.classList.add('active');
+          });
+        }, 800);
+      } catch (error) {
+        console.error('页面加载完成事件处理出错:', error);
       }
     });
   </script>
