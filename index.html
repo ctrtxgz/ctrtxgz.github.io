@@ -2,765 +2,188 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>实验中学R.I.P.R.I.P.</title>
-    <style>
-        * {
-              margin: 0;
-                    padding: 0;
-                    </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 新增视口适配 -->
+  <title>R.I.P.</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-      min-height: 100vh;
-      overflow-x: hidden;
-      padding: 15px;
-      font-family: 'KaiTi', sans-serif;
-    }
-    .header {
+    h1, h2, h3 {
       text-align: center;
-      margin: 20px 0;
-    }
-    h1 {
-      font-size: 32px;
-      color: #e74c3c;
-      text-shadow: 2px 2px #f9e79f;
-      animation: bounce 1.5s infinite;
+      font-family: 'LiShu', sans-serif;
+      margin: 10px 0;
     }
     .clock {
-      background: rgba(255,255,255,0.8);
-      padding: 12px;
-      border-radius: 18px;
-      box-shadow: 0 0 12px rgba(149, 165, 166, 0.3);
-      width: 90%;
-      margin: 15px auto;
-      font-size: 18px;
-      color: #34495e;
-    }
-    .poem-container {
-      background: white;
-      border-radius: 25px;
-      padding: 20px;
-      margin: 20px 0;
-      box-shadow: 0 12px 25px rgba(135, 206, 250, 0.2);
-      transition: transform 0.4s, box-shadow 0.4s;
-    }
-    .poem-container:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 18px 35px rgba(135, 206, 250, 0.3);
-    }
-    .poem-title {
-      text-align: center;
-      margin-bottom: 15px;
-      position: relative;
-    }
-    .poem-title:after {
-      content: "";
-      position: absolute;
-      bottom: -8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 70px;
-      height: 2px;
-      background: linear-gradient(to right, #3498db, #2ecc71);
-      border-radius: 2px;
-    }
-    ol {
-      list-style-position: inside;
-      line-height: 1.8;
-      font-size: 17px;
-      color: #2c3e50;
-      padding-left: 5px;
-    }
-    ol li {
-      position: relative;
-      padding-left: 20px;
-      margin-bottom: 10px;
-      animation: fadeIn 0.8s ease-out forwards;
-      opacity: 0;
-    }
-    ol li:before {
-      content: "✦";
-      position: absolute;
-      left: 0;
-      color: #3498db;
-      font-weight: bold;
-    }
-    .button-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      margin: 15px 0;
-    }
-    .main-button {
-      width: 180px;
-      height: 55px;
-      background: radial-gradient(circle, #3498db, #2ecc71);
-      border: none;
-      border-radius: 30px;
-      box-shadow: 0 4px 12px rgba(46, 204, 113, 0.5);
-      font-size: 15px;
-      color: white;
-      text-shadow: 1px 1px #2c3e50;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    .main-button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 16px rgba(46, 204, 113, 0.7);
-    }
-    .game-section {
-      background: white;
-      border-radius: 20px;
-      padding: 15px;
-      margin: 20px 0;
-      box-shadow: 0 10px 20px rgba(135, 206, 255, 0.2);
-    }
-    .game-title {
-      text-align: center;
-      margin-bottom: 15px;
-      color: #2c3e50;
-      position: relative;
-      font-size: 22px;
-    }
-    .game-title:after {
-      content: "";
-      position: absolute;
-      bottom: -8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 2px;
-      background: linear-gradient(to right, #f39c12, #e74c3c);
-    }
-    .games-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 12px;
-    }
-    .game-card {
-      background: #f9f9f9;
-      border-radius: 15px;
-      padding: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-      text-align: center;
-      flex: 1 1 280px;
-      min-width: 250px;
-      max-width: 380px;
-      transition: all 0.3s;
-    }
-    .game-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.12);
-    }
-    canvas {
+      padding: 15px 20px;
       border: 1px solid #ddd;
       border-radius: 8px;
-      background: #fff;
+      background-color: #f9f9f9;
+      width: 60%;
+      margin: 20px auto;
+      font-size: 18px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .btn {
+      font-size: 16px;
+      font-family: Arial, sans-serif;
+      width: 160px;
+      height: 55px;
+      border: 1px solid #d6bcd6;
+      color: #fff;
+      font-weight: bold;
+      border-radius: 15px;
+      box-shadow: 3px 4px 0px 0px #899599;
+      text-shadow: 0px 1px 0px #e1e2ed;
+      background: linear-gradient(rgba(222, 155, 97, 1), #bab1ba);
       display: block;
-      margin: 8px auto;
-    }
-    .game-controls {
-      display: flex;
-      justify-content: center;
-      gap: 6px;
-      margin: 8px 0;
-    }
-    .game-btn {
-      padding: 5px 10px;
-      background: #3498db;
-      color: white;
-      border: none;
-      border-radius: 4px;
+      margin: 20px auto;
+      text-align: center;
+      line-height: 55px;
+      text-decoration: none;
+      transition: all 0.2s;
       cursor: pointer;
-      font-size: 12px;
-      transition: background 0.3s;
     }
-    .game-btn:hover {
-      background: #2980b9;
-    }
-    #effect-text {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 24px;
-      color: transparent;
-      text-shadow: 0 0 15px #e74c3c;
-      opacity: 0;
-      transition: opacity 0.5s;
-      z-index: 100;
-      font-family: 'Comic Sans MS', cursive;
+    .btn:hover {
+      transform: translateY(2px);
+      box-shadow: 1px 2px 0px 0px #899599;
     }
     #backToTop {
-      position: fixed;
-      bottom: 15px;
-      right: 15px;
-      width: 45px;
-      height: 45px;
-      border: none;
-      border-radius: 50%;
-      background: radial-gradient(circle, #9b59b6, #8e44ad);
-      color: white;
-      font-size: 18px;
+      font-size: 28px;
+      width: 200px;
+      height: 100px;
+      border-width: 10px;
+      color: #3a8a9e;
+      border-color: #d6bcd6;
+      font-weight: bold;
+      border-radius: 50px;
+      box-shadow: 1px 1px 0px 1px #899599;
+      text-shadow: 0px 1px 0px #e1e2ed;
+      background: linear-gradient(#ededed, #bab1ba);
       cursor: pointer;
-      box-shadow: 0 3px 10px rgba(155, 89, 182, 0.5);
-      transition: all 0.3s;
-      z-index: 100;
-      display: none;
     }
     #backToTop:hover {
-      background: radial-gradient(circle, #8e44ad, #9b59b6);
-      transform: scale(1.1);
-      box-shadow: 0 5px 15px rgba(155, 89, 182, 0.7);
+      background: linear-gradient(#bab1ba, #ededed);
     }
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      z-index: 200;
-      justify-content: center;
-      align-items: center;
-      padding: 15px;
+    ol {
+      max-width: 600px;
+      margin: 0 auto 30px;
+      padding-left: 20px;
     }
-    .modal-content {
-      background: white;
-      border-radius: 15px;
-      max-width: 90%;
-      max-height: 90vh;
-      overflow: hidden;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-      animation: modalFadeIn 0.5s ease-out;
+    ol li {
+      margin-bottom: 15px;
+      line-height: 1.6;
     }
-    .modal img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-    .close-modal {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      font-size: 20px;
-      color: white;
-      cursor: pointer;
-      transition: color 0.3s;
-      z-index: 201;
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-    @keyframes fadeIn {
-      from { 
-        opacity: 0;
-        transform: translateX(-15px);
+    
+    /* 手机端响应式适配（屏幕宽度<600px时生效） */
+    @media (max-width: 600px) {
+      .clock, ol {
+        width: 90%;
       }
-      to { 
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-    @keyframes modalFadeIn {
-      from { 
-        opacity: 0;
-        transform: scale(0.9);
-      }
-      to { 
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-    @media (max-width: 450px) {
-      h1 { font-size: 24px; }
-      .poem-container, .game-section {
-        padding: 15px;
-      }
-      .main-button {
-        width: 160px;
+      .btn {
+        width: 140px;
         height: 50px;
         font-size: 14px;
       }
-      .game-card {
-        min-width: 230px;
-        padding: 10px;
+      h1 {
+        font-size: 24px;
+      }
+      h2 {
+        font-size: 22px;
+      }
+      h3 {
+        font-size: 18px;
+      }
+      #backToTop {
+        width: 150px;
+        height: 80px;
+        font-size: 24px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="header">
-    <h1>实验中学趣味游戏站</h1>
-    <div class="clock" id="myClock"></div>
-  </div>
-
-  <div class="poem-container">
-    <div class="poem-title">
-      <h2 id="poemTitle">随机诗词</h2>
-    </div>
-    <ol id="poemList"></ol>
-  </div>
-
-  <div class="button-container">
-    <button class="main-button" id="showPrincipal">点击查看校长帅照</button>
-    <button class="main-button" onclick="startMagic()">趣味彩蛋模式</button>
-  </div>
-
-  <div class="game-section">
-    <h3 class="game-title">课间小游戏合集</h3>
-    <div class="games-container">
-      <!-- 俄罗斯方块 -->
-      <div class="game-card">
-        <h4>俄罗斯方块</h4>
-        <canvas id="tetris" width="200" height="400"></canvas>
-        <div class="game-controls">
-          <button class="game-btn" id="tetrisStart">开始</button>
-          <button class="game-btn" id="tetrisPause">暂停</button>
-        </div>
-        <p>方向键控制，空格键加速</p>
-      </div>
-      
-      <!-- 五子棋AI对战 -->
-      <div class="game-card">
-        <h4>五子棋 (人机对战)</h4>
-        <canvas id="gobang" width="300" height="300"></canvas>
-        <div class="game-controls">
-          <button class="game-btn" id="gobangStart">开始游戏</button>
-          <button class="game-btn" id="gobangReset">重置</button>
-        </div>
-        <p>您执黑先行，AI自动落子</p>
-      </div>
-      
-      <!-- 连连看 -->
-      <div class="game-card">
-        <h4>连连看</h4>
-        <canvas id="liankan" width="300" height="300"></canvas>
-        <div class="game-controls">
-          <button class="game-btn" id="liankanStart">开始</button>
-          <button class="game-btn" id="liankanReset">重置</button>
-        </div>
-        <p>点击相同图案连线消除</p>
-      </div>
-      
-      <!-- 小人跑酷 -->
-      <div class="game-card">
-        <h4>小人跑酷</h4>
-        <canvas id="parkour" width="300" height="200"></canvas>
-        <div class="game-controls">
-          <button class="game-btn" id="parkourStart">开始</button>
-          <button class="game-btn" id="parkourReset">重置</button>
-        </div>
-        <p>点击屏幕跳跃躲避障碍</p>
-      </div>
-      
-      <!-- 打飞机 -->
-      <div class="game-card">
-        <h4>打飞机</h4>
-        <canvas id="airplane" width="300" height="400"></canvas>
-        <div class="game-controls">
-          <button class="game-btn" id="airplaneStart">开始</button>
-          <button class="game-btn" id="airplaneReset">重置</button>
-        </div>
-        <p>滑动控制飞机，自动射击</p>
-      </div>
-    </div>
-  </div>
-
-  <div id="effect-text"></div>
-  <button id="backToTop">↑</button>
-  <div class="modal" id="principalModal">
-    <span class="close-modal">&times;</span>
-    <div class="modal-content">
-      <img src="https://ibb.co/Z1cqpnd5" alt="校长帅照">
-    </div>
-  </div>
-
-  <audio id="clickSound" src="https://assets.mixkit.co/sfx/preview/mixkit-game-point-collectible-2199.mp3" preload="auto"></audio>
-  <audio id="magicSound" src="https://assets.mixkit.co/sfx/preview/mixkit-magic-wand-spell-2070.mp3" preload="auto"></audio>
-  <audio id="buttonSound" src="https://assets.mixkit.co/sfx/preview/mixkit-button-click-2000.mp3" preload="auto"></audio>
-
+  <div class="clock" id="myClock">加载时间中...</div>
   <script>
-    // 时间显示功能
     function updateTime() {
       const now = new Date();
-      document.getElementById('myClock').textContent = 
-        `当前时间：${now.toLocaleString('zh-CN', { 
-          year: 'numeric', month: '2-digit', day: '2-digit',
-          hour: '2-digit', minute: '2-digit', weekday: 'long' 
-        })}`;
+      const timeStr = now.toLocaleString('zh-CN', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        weekday: 'long'
+      });
+      document.getElementById('myClock').textContent = `当前时间：${timeStr}`;
     }
     updateTime();
     setInterval(updateTime, 1000);
-
-    // 诗词库 - 每次刷新随机显示不同诗词
-    const poemLibrary = [
-      {
-        title: "校园趣事",
-        content: [
-          "课堂粉笔沙沙响",
-          "窗外鸟儿把歌唱",
-          "老师提问手忙慌",
-          "同桌悄悄递纸张",
-          "操场跑道尘土扬",
-          "篮球划过抛物线",
-          "食堂阿姨手不抖",
-          "饭菜飘香满走廊",
-          "图书馆里静无声",
-          "学霸刷题到天明",
-          "考试前的突击战",
-          "笔尖飞舞像流星",
-          "放学铃声真动听",
-          "校门口外等身影",
-          "青春岁月匆匆过",
-          "留下多少笑与情",
-          "教室后排的涂鸦",
-          "黑板角落的漫画",
-          "这些年少的时光",
-          "都是最美的童话"
-        ]
-      },
-      {
-        title: "课间十分钟",
-        content: [
-          "下课铃声响叮咚",
-          "教室瞬间变欢腾",
-          "走廊追逐又打闹",
-          "厕所排队像长龙",
-          "小卖部前人挤人",
-          "辣条薯片最畅销",
-          "女生扎堆聊明星",
-          "男生球场拼输赢",
-          "值日生擦黑板",
-          "粉笔灰落满衣襟",
-          "突然上课铃又响",
-          "个个跑得汗淋淋",
-          "老师走进教室门",
-          "瞬间安静像幽灵",
-          "翻开课本装正经",
-          "心里还在想零食",
-          "这样的课间呀",
-          "充满欢乐与青春",
-          "多年以后回想",
-          "都是珍贵的光阴"
-        ]
-      },
-      {
-        title: "同桌的你",
-        content: [
-          "我的同桌是个谜",
-          "上课总爱打瞌睡",
-          "老师提问吓一跳",
-          "站起来说不知道",
-          "考试总抄我答案",
-          "放学一起买冰棍",
-          "分享零食和秘密",
-          "书包里藏漫画书",
-          "三八线画桌上",
-          "谁过界就掐手臂",
-          "毕业那天拍合照",
-          "你哭红了大眼睛",
-          "如今各奔东西",
-          "失去联系好多年",
-          "偶尔想起你",
-          "心里暖暖的甜",
-          "不知道你现在",
-          "是否还像从前",
-          "那个调皮的少年",
-          "坐在我左边"
-        ]
-      },
-      {
-        title: "希达之歌 (变体1)",
-        content: [
-          "风掠过老槐树的枝桠",
-          "摇晃起教学楼前的银杏叶",
-          "您的身影，总在晨光里伫立",
-          "目送莘莘学子踏入知识的殿堂",
-          "课堂上，您的声音清朗",
-          "如清泉流淌在求知的心房",
-          "作业本上，红色批注似星火",
-          "点亮了无数迷茫的方向",
-          "运动会的呐喊，艺术节的欢唱",
-          "您的笑容比阳光还明亮",
-          "走廊里的踱步，办公室的灯光",
-          "藏着对教育最深沉的守望",
-          "如今，领导已将您带往远方",
-          "但您播下的种子正在生长",
-          "那棵您亲手栽种的玉兰树",
-          "年年绽放着思念的芬芳",
-          "您的教诲，是不灭的灯塔",
-          "在我们的人生航程中闪亮",
-          "宋校长，您永远是我们心中",
-          "最温暖的月光，最坚实的脊梁"
-        ]
-      },
-      {
-        title: "希达之歌 (变体2)",
-        content: [
-          "老槐树的叶子沙沙响",
-          "校长站在教学楼旁",
-          "每天早晨迎学生",
-          "笑容温暖又慈祥",
-          "课堂上他讲课忙",
-          "知识海洋任翱翔",
-          "作业批改很认真",
-          "红色笔迹闪金光",
-          "运动会上他加油",
-          "艺术节里他鼓掌",
-          "办公室里常忙碌",
-          "为了学生费心肠",
-          "虽然现在他离开",
-          "但爱永远不遗忘",
-          "校园那棵玉兰树",
-          "年年开花送清香",
-          "校长的谆谆教诲",
-          "永远记在我心上",
-          "他是我们的榜样",
-          "指引方向不迷茫",
-          "宋校长啊宋校长",
-          "我们永远不会忘"
-        ]
-      }
-    ];
-
-    // 随机获取一首诗词
-    function getRandomPoem() {
-      const randomIndex = Math.floor(Math.random() * poemLibrary.length);
-      return poemLibrary[randomIndex];
-    }
-
-    // 渲染诗词到页面
-    function renderPoem() {
-      const poem = getRandomPoem();
-      const poemTitle = document.getElementById('poemTitle');
-      const poemList = document.getElementById('poemList');
-      
-      poemTitle.textContent = poem.title;
-      poemList.innerHTML = '';
-      
-      poem.content.forEach((line, index) => {
-        const li = document.createElement('li');
-        li.innerHTML = `<p>${line}</p>`;
-        li.style.animationDelay = `${0.1 * index}s`;
-        poemList.appendChild(li);
+  </script>
+  <hr style="margin: 30px 0;">
+  <h1 style="color:darkred; background:skyblue; font-weight: bold; padding: 10px 0;">
+    实验中学R.I.P.
+  </h1>
+  <hr style="margin: 30px 0;">
+  <h2 style="color:darkblue; font-weight: bold; font-size: 28px;">
+    <big>希达之歌</big>
+  </h2>
+  <h3 style="color:pink; font-weight: bold; font-size: 22px; margin-bottom: 30px;">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;By 豆包
+  </h3>
+  <ol style="color: blue; font-size: 18px;">
+    <li><p>风掠过老槐树的枝桠</p></li>
+    <li><p>摇晃起教学楼前的银杏叶</p></li>
+    <li><p>您的身影，总在晨光里伫立</p></li>
+    <li><p>目送莘莘学子踏入知识的殿堂</p></li>
+    <li><p>课堂上，您的声音清朗</p></li>
+    <li><p>如清泉流淌在求知的心房</p></li>
+    <li><p>作业本上，红色批注似星火</p></li>
+    <li><p>点亮了无数迷茫的方向</p></li>
+    <li><p>运动会的呐喊，艺术节的欢唱</p></li>
+    <li><p>您的笑容比阳光还明亮</p></li>
+    <li><p>走廊里的踱步，办公室的灯光</p></li>
+    <li><p>藏着对教育最深沉的守望</p></li>
+    <li><p>如今，领导已将您带往远方</p></li>
+    <li><p>但您播下的种子正在生长</p></li>
+    <li><p>那棵您亲手栽种的玉兰树</p></li>
+    <li><p>年年绽放着思念的芬芳</p></li>
+    <li><p>您的教诲，是不灭的灯塔</p></li>
+    <li><p>在我们的人生航程中闪亮</p></li>
+    <li><p>宋校长，您永远是我们心中</p></li>
+    <li><p>最温暖的月光，最坚实的脊梁</p></li>
+  </ol>
+  <h1 style="color:green; font-size: 24px; margin: 40px 0;">
+    -----------------宋希达想你了
+  </h1>
+  <hr style="margin: 30px 0;">
+  <a href="https://ibb.co/Z1cqpnd5" class="btn" target="_blank">
+    点击查看神秘人帅照
+  </a>
+  <hr style="margin: 30px 0;">
+  <span style="display: block; text-align: center; margin: 20px 0;">
+    <strong>
+      <big>
+        <p style="color:purple; font-size: 22px;">2025/6/18</p>
+      </big>
+    </strong>
+  </span>
+  <hr style="margin: 30px 0;">
+  <button id="backToTop" style="display: block; margin: 0 auto 50px;">
+    🔝
+  </button>
+  <script>
+    document.getElementById('backToTop').addEventListener('click', function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
       });
-    }
-
-    // 诗词动画
-    function triggerPoemAnimation() {
-      const poemContainer = document.querySelector('.poem-container');
-      const poemRect = poemContainer.getBoundingClientRect();
-      if (poemRect.top < window.innerHeight - 100) {
-        document.querySelectorAll('ol li').forEach(li => {
-          li.style.animationPlayState = 'running';
-        });
-        window.removeEventListener('scroll', triggerPoemAnimation);
-      }
-    }
-
-    // 校长照片模态框
-    const principalModal = document.getElementById('principalModal');
-    const showPrincipalBtn = document.getElementById('showPrincipal');
-    const closeModal = document.querySelector('.close-modal');
-
-    showPrincipalBtn.addEventListener('click', function() {
-      principalModal.style.display = 'flex';
-      playSound(buttonSound);
-      effectText('帅气登场！', '#ff9800');
     });
-
-    closeModal.addEventListener('click', function() {
-      principalModal.style.display = 'none';
-    });
-
-    window.addEventListener('click', function(e) {
-      if (e.target === principalModal) {
-        principalModal.style.display = 'none';
-      }
-    });
-
-    // 返回顶部按钮
-    const backToTopBtn = document.getElementById('backToTop');
     window.addEventListener('scroll', function() {
+      const backToTopBtn = document.getElementById('backToTop');
       if (window.pageYOffset > 300) {
         backToTopBtn.style.display = 'block';
       } else {
         backToTopBtn.style.display = 'none';
       }
     });
-
-    backToTopBtn.addEventListener('click', function() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      playSound(buttonSound);
-    });
-
-    // 特效文字
-    function effectText(text, color) {
-      const effectText = document.getElementById('effect-text');
-      effectText.textContent = text;
-      effectText.style.color = color;
-      effectText.style.opacity = 1;
-      effectText.animate([{ transform: 'translate(-50%, -50%) scale(1)' }, { transform: 'translate(-50%, -50%) scale(1.2)' }], { duration: 300, fill: 'forwards' });
-      setTimeout(() => { effectText.style.opacity = 0; }, 1500);
-    }
-
-    // 播放音效
-    function playSound(sound) {
-      sound.currentTime = 0;
-      sound.play().catch(err => console.log('音效播放失败:', err));
-    }
-
-    // 彩蛋互动功能
-    let isMagicActive = false;
-    let eggCount = 0;
-    const maxEggs = 15;
-    const eggImages = [
-      'https://i.imgur.com/3cL9gXj.png',
-      'https://i.imgur.com/5J7tL4z.png',
-      'https://i.imgur.com/8ZJ3J6H.png',
-      'https://i.imgur.com/KzJ9Z7H.png',
-      'https://i.imgur.com/HzJ6Z8H.png'
-    ];
-
-    function startMagic() {
-      isMagicActive = !isMagicActive;
-      const btn = document.querySelector('.main-button[onclick="startMagic()"]');
-      if (isMagicActive) {
-        btn.textContent = '关闭彩蛋模式';
-        btn.style.backgroundColor = 'radial-gradient(circle, #e74c3c, #f39c12)';
-        document.body.style.cursor = 'pointer';
-        for (let i = 0; i < 3; i++) dropRandomEgg();
-        playSound(magicSound);
-        effectText('彩蛋雨已开启！点击屏幕掉落彩蛋～', '#e74c3c');
-      } else {
-        btn.textContent = '趣味彩蛋模式';
-        btn.style.backgroundColor = 'radial-gradient(circle, #3498db, #2ecc71)';
-        document.body.style.cursor = 'default';
-        document.querySelectorAll('.magic-egg').forEach(egg => egg.remove());
-        eggCount = 0;
-        effectText('彩蛋模式已关闭', '#3498db');
-      }
-    }
-
-    function dropEggAt(x, y) {
-      const gameArea = document.querySelector('.game-section');
-      if (!gameArea) return;
-      const egg = createEgg();
-      egg.style.left = x - 25 + 'px';
-      egg.style.top = y - 50 + 'px';
-      gameArea.appendChild(egg);
-      eggCount++;
-      if (eggCount > maxEggs) {
-        const firstEgg = document.querySelector('.magic-egg');
-        if (firstEgg) firstEgg.remove();
-        eggCount--;
-      }
-    }
-
-    function dropRandomEgg() {
-      const gameArea = document.querySelector('.game-section');
-      if (!gameArea) return;
-      const egg = createEgg();
-      egg.style.left = Math.random() * 100 + 'vw';
-      egg.style.top = '-50px';
-      gameArea.appendChild(egg);
-      eggCount++;
-      if (eggCount > maxEggs) {
-        const firstEgg = document.querySelector('.magic-egg');
-        if (firstEgg) firstEgg.remove();
-        eggCount--;
-      }
-    }
-
-    function createEgg() {
-      const egg = document.createElement('div');
-      egg.className = 'magic-egg';
-      egg.style.position = 'absolute';
-      egg.style.width = '40px';
-      egg.style.height = '40px';
-      egg.style.backgroundSize = 'cover';
-      egg.style.backgroundPosition = 'center';
-      egg.style.animation = 'fall 1.8s linear forwards';
-      egg.style.zIndex = '50';
-      const randomImg = eggImages[Math.floor(Math.random() * eggImages.length)];
-      egg.style.backgroundImage = `url('${randomImg}')`;
-      egg.style.animationDuration = (Math.random() * 1 + 1) + 's';
-      egg.style.animationDelay = Math.random() * 0.5 + 's';
-      egg.addEventListener('animationend', () => egg.remove());
-      egg.addEventListener('click', function() {
-        this.style.animation = 'none';
-        this.style.transform = 'scale(0)';
-        this.style.transition = 'transform 0.3s';
-        const texts = ['✨ 彩蛋掉落！', '🎉 惊喜！', '🎁 获得道具！', '💥 特效触发！', '🌟 幸运+1', '🤣 笑死我了！'];
-        effectText(texts[Math.floor(Math.random() * texts.length)], 
-                 `rgb(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255})`);
-        setTimeout(() => this.remove(), 300);
-      });
-      return egg;
-    }
-
-    document.addEventListener('click', function(e) {
-      if (isMagicActive) {
-        dropEggAt(e.clientX, e.clientY);
-        playSound(clickSound);
-      }
-    });
-
-    window.addEventListener('load', () => {
-      // 初始化诗词
-      renderPoem();
-      
-      const style = document.createElement('style');
-      style.textContent = `
-        @keyframes fall {
-          0% { top: -50px; opacity: 1; }
-          100% { top: 100vh; opacity: 0; }
-        }
-      `;
-      document.head.appendChild(style);
-      for (let i = 0; i < 2; i++) {
-        const egg = createEgg();
-        egg.style.animation = 'fall 8s linear infinite';
-        egg.style.left = Math.random() * 100 + 'vw';
-        egg.style.top = Math.random() * 50 + 'vh';
-        document.body.appendChild(egg);
-      }
-      
-      // 小游戏初始化（为节省篇幅，此处省略具体游戏代码，与之前版本一致）
-      initTetris();
-      initGobang();
-      initLiankan();
-      initParkour();
-      initAirplane();
-    });
-
-    // 小游戏初始化函数（示例，实际代码与之前版本一致）
-    function initTetris() {
-      // 俄罗斯方块初始化代码...
-    }
-    function initGobang() {
-      // 五子棋初始化代码...
-    }
-    function initLiankan() {
-      // 连连看初始化代码...
-    }
-    function initParkour() {
-      // 跑酷游戏初始化代码...
-    }
-    function initAirplane() {
-      // 打飞机游戏初始化代码...
-    }
   </script>
 </body>
 </html>
