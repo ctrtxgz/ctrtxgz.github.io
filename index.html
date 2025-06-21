@@ -1,0 +1,1998 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>实验中学R.I.P.</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8B4513;
+            --primary-light: #A67C52;
+            --primary-dark: #603813;
+            --gold: #d4af37;
+            --gold-light: #f0e68c;
+            --paper: #f8f5f0;
+            --safe-area-inset-top: env(safe-area-inset-top);
+            --safe-area-inset-bottom: env(safe-area-inset-bottom);
+            --safe-area-inset-left: env(safe-area-inset-left);
+            --safe-area-inset-right: env(safe-area-inset-right);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background: linear-gradient(135deg, #f8f5f0 0%, #e8e4d9 100%);
+            color: #4a3c2a;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+            padding: 0;
+            padding-top: var(--safe-area-inset-top);
+            padding-bottom: var(--safe-area-inset-bottom);
+            padding-left: var(--safe-area-inset-left);
+            padding-right: var(--safe-area-inset-right);
+        }
+        
+        /* 水墨背景 */
+        .ink-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(139, 69, 19, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(139, 69, 19, 0.04) 0%, transparent 45%),
+                radial-gradient(circle at 40% 60%, rgba(139, 69, 19, 0.02) 0%, transparent 50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        /* 金色粒子 */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--gold-light);
+            animation: floatParticle linear infinite;
+        }
+        
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) translateX(20px); opacity: 0; }
+        }
+        
+        /* 加载指示器 */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--paper);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+            padding: var(--safe-area-inset-top) var(--safe-area-inset-right) var(--safe-area-inset-bottom) var(--safe-area-inset-left);
+        }
+        
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            border: 8px solid rgba(139, 69, 19, 0.1);
+            border-top: 8px solid var(--gold);
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* 主容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* 标题区域 */
+        .header {
+            text-align: center;
+            padding: 2rem 0;
+        }
+        
+        .school-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(145deg, var(--primary), var(--gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 25px rgba(139, 69, 19, 0.3);
+        }
+        
+        .school-icon i {
+            font-size: 3rem;
+            color: white;
+        }
+        
+        .main-title {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            text-shadow: 3px 3px 0px rgba(139, 69, 19, 0.2);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+            line-height: 1.2;
+        }
+        
+        .title-char {
+            display: inline-block;
+            animation: float 4s ease-in-out infinite;
+            position: relative;
+        }
+        
+        .title-char:nth-child(2n) {
+            animation-delay: 0.5s;
+        }
+        
+        .title-char:nth-child(3n) {
+            animation-delay: 1s;
+        }
+        
+        .title-char.gold {
+            color: var(--gold);
+            margin-left: 0.5rem;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            color: #4a3c2a;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            line-height: 1.4;
+        }
+        
+        /* 时钟区域 */
+        .clock-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem auto;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+            max-width: 1000px;
+        }
+        
+        .clock-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(to right, var(--primary), var(--primary-light), var(--gold));
+        }
+        
+        .clock-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+        
+        .clock-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .clock-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .clock-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(145deg, var(--primary), var(--gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(139, 69, 19, 0.3);
+        }
+        
+        .clock-icon i {
+            font-size: 1.5rem;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        
+        .clock-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+        
+        .time-display {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(248, 245, 240, 0.6);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+        
+        #currentTime {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        #currentDate {
+            font-size: 1.2rem;
+            color: #6b5d4b;
+        }
+        
+        .time-status {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.6rem 1.5rem;
+            background: linear-gradient(to right, #e8f5e9, #c8e6c9);
+            border-radius: 50px;
+            color: #2e7d32;
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .time-status i {
+            margin-right: 0.5rem;
+        }
+        
+        .analog-clock {
+            width: 220px;
+            height: 220px;
+            border: 10px solid var(--primary);
+            border-radius: 50%;
+            background: var(--paper);
+            box-shadow: 
+                0 8px 20px rgba(139, 69, 19, 0.15),
+                inset 0 0 20px rgba(139, 69, 19, 0.08);
+            position: relative;
+            margin: 0 auto;
+        }
+        
+        .clock-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 14px;
+            height: 14px;
+            background: var(--primary);
+            border-radius: 50%;
+            z-index: 10;
+            box-shadow: 0 0 8px rgba(139, 69, 19, 0.6);
+        }
+        
+        .hour-hand, .minute-hand, .second-hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom center;
+            border-radius: 4px;
+            transform: translateX(-50%);
+        }
+        
+        .hour-hand {
+            width: 6px;
+            height: 55px;
+            background: var(--primary-dark);
+            z-index: 3;
+            box-shadow: 0 0 4px rgba(0,0,0,0.2);
+        }
+        
+        .minute-hand {
+            width: 5px;
+            height: 70px;
+            background: var(--primary);
+            z-index: 2;
+            box-shadow: 0 0 4px rgba(0,0,0,0.2);
+        }
+        
+        .second-hand {
+            width: 2px;
+            height: 80px;
+            background: var(--gold);
+            z-index: 1;
+            box-shadow: 0 0 8px var(--gold-light);
+        }
+        
+        /* 诗歌区域 */
+        .poem-section {
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%23f8f5f0" width="100" height="100"/><path fill="%23f0ede5" d="M0,0 L100,0 L100,100 L0,100 Z" /></svg>');
+            background-size: 100% 100%;
+            border-radius: 15px;
+            padding: 2rem 1.5rem;
+            margin: 2rem auto;
+            box-shadow: 0 10px 25px rgba(139, 69, 19, 0.1);
+            border: 1px solid #e8e1d1;
+            position: relative;
+            overflow: hidden;
+            max-width: 900px;
+        }
+        
+        .poem-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(to right, var(--primary), var(--primary-light), var(--gold));
+            opacity: 0.8;
+        }
+        
+        .poem-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .poem-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--gold));
+            border-radius: 2px;
+        }
+        
+        .poem-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+        
+        .poem-subtitle {
+            font-size: 1.2rem;
+            color: #6b5d4b;
+            font-style: italic;
+        }
+        
+        .poem-content {
+            padding: 0 1rem;
+        }
+        
+        .poem-line {
+            position: relative;
+            padding-left: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #4a3c2a;
+            text-align: justify;
+            text-justify: inter-ideograph;
+            transition: all 0.3s ease;
+        }
+        
+        .poem-line::before {
+            content: '';
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0.7rem;
+            height: 0.7rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--gold));
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 6px rgba(212, 175, 55, 0.3);
+        }
+        
+        .poem-line:hover::before {
+            opacity: 1;
+            transform: translateY(-50%) scale(1.3);
+            box-shadow: 0 0 10px var(--gold-light);
+        }
+        
+        .poem-line:hover {
+            transform: translateX(6px);
+            color: #2a2116;
+        }
+        
+        .poem-decoration {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            opacity: 0.1;
+            font-size: 3.5rem;
+            color: var(--primary);
+            transform: rotate(15deg);
+        }
+        
+        /* 纪念区域 */
+        .memory-section {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.8), rgba(248, 245, 240, 0.9));
+            border-radius: 15px;
+            padding: 1.8rem;
+            margin: 2rem auto;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+            text-align: center;
+            max-width: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .memory-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary), var(--gold));
+        }
+        
+        .memory-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(145deg, var(--primary), var(--gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.2rem;
+            box-shadow: 0 4px 12px rgba(139, 69, 19, 0.2);
+        }
+        
+        .memory-icon i {
+            font-size: 1.8rem;
+            color: white;
+        }
+        
+        .memory-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+        }
+        
+        .memory-date {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+        
+        /* 按钮样式 */
+        .photo-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(145deg, var(--primary), var(--gold));
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 6px 15px rgba(139, 69, 19, 0.3);
+            transition: all 0.3s ease;
+            margin: 1.5rem auto;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .photo-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.4);
+        }
+        
+        .photo-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, var(--gold), var(--primary));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+        
+        .photo-button:hover::before {
+            opacity: 1;
+        }
+        
+        .photo-button i {
+            margin-right: 8px;
+        }
+        
+        /* 页脚样式 */
+        .footer {
+            background: linear-gradient(to right, rgba(139, 69, 19, 0.08), rgba(212, 175, 55, 0.08));
+            border-top: 1px solid rgba(139, 69, 19, 0.15);
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--gold));
+            opacity: 0.6;
+        }
+        
+        .footer-content {
+            background: rgba(248, 245, 240, 0.7);
+            border-radius: 10px;
+            padding: 1.2rem 1.5rem;
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(139, 69, 19, 0.08);
+        }
+        
+        .footer-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.4rem;
+        }
+        
+        .footer-subtitle {
+            font-size: 1rem;
+            color: #6b5d4b;
+        }
+
+        /* 五子棋区域 - 增强版 */
+        .gobang-section {
+            background: white;
+            border-radius: 18px;
+            padding: 2rem 1rem;
+            margin: 3rem auto;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+            max-width: 1000px;
+            text-align: center;
+        }
+        
+        .gobang-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(to right, var(--primary), var(--primary-light), var(--gold));
+        }
+        
+        .gobang-header {
+            margin-bottom: 1.5rem;
+        }
+        
+        .gobang-title {
+            font-size: 2rem;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+        
+        .gobang-subtitle {
+            font-size: 1.1rem;
+            color: #6b5d4b;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .gobang-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+        
+        .gobang-board-container {
+            position: relative;
+            margin: 0 auto;
+        }
+        
+        .gobang-board {
+            display: grid;
+            grid-template-columns: repeat(15, 22px);
+            grid-template-rows: repeat(15, 22px);
+            background: #e9cda5;
+            border: 2px solid var(--primary);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            position: relative;
+        }
+        
+        .gobang-cell {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .gobang-cell::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background: rgba(139, 69, 19, 0.5);
+            top: 50%;
+            left: 0;
+        }
+        
+        .gobang-cell::after {
+            content: '';
+            position: absolute;
+            height: 100%;
+            width: 1px;
+            background: rgba(139, 69, 19, 0.5);
+            left: 50%;
+            top: 0;
+        }
+        
+        .stone {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+        }
+        
+        .stone.black {
+            background: radial-gradient(circle at 30% 30%, #333, #000);
+        }
+        
+        .stone.white {
+            background: radial-gradient(circle at 30% 30%, #fff, #ddd);
+            border: 1px solid #ccc;
+        }
+        
+        /* 难度选择 */
+        .difficulty-selector {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 1.2rem;
+            flex-wrap: wrap;
+        }
+        
+        .difficulty-btn {
+            padding: 0.7rem 1.2rem;
+            background: linear-gradient(to right, var(--primary-light), var(--primary));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+            min-width: 100px;
+        }
+        
+        .difficulty-btn.active {
+            background: linear-gradient(to right, var(--gold), var(--primary-dark));
+            box-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+        }
+        
+        .difficulty-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* 游戏控制 */
+        .gobang-controls {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        
+        .gobang-btn {
+            padding: 0.7rem 1.5rem;
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .gobang-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .gobang-status {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--primary-dark);
+            min-height: 1.8rem;
+            margin-top: 0.8rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            background: rgba(139, 69, 19, 0.05);
+            display: inline-block;
+        }
+        
+        /* 成就系统 */
+        .achievements-panel {
+            background: linear-gradient(145deg, rgba(248, 245, 240, 0.9), rgba(255, 255, 255, 0.95));
+            border-radius: 12px;
+            padding: 1.2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(139, 69, 19, 0.1);
+            min-width: 250px;
+            max-width: 280px;
+        }
+        
+        .achievements-header {
+            text-align: center;
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--gold);
+        }
+        
+        .achievements-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+        
+        .achievement {
+            display: flex;
+            align-items: center;
+            padding: 0.7rem;
+            margin-bottom: 0.7rem;
+            background: rgba(248, 245, 240, 0.7);
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .achievement-icon {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(145deg, var(--gold), var(--primary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.8rem;
+            flex-shrink: 0;
+        }
+        
+        .achievement-icon i {
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .achievement-info {
+            flex: 1;
+        }
+        
+        .achievement-name {
+            font-weight: bold;
+            color: var(--primary-dark);
+            margin-bottom: 0.2rem;
+            font-size: 0.95rem;
+        }
+        
+        .achievement-desc {
+            font-size: 0.85rem;
+            color: #6b5d4b;
+        }
+        
+        .achievement-progress {
+            display: flex;
+            align-items: center;
+            margin-top: 0.4rem;
+        }
+        
+        .progress-bar {
+            flex: 1;
+            height: 6px;
+            background: rgba(139, 69, 19, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-right: 0.4rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--gold), var(--primary));
+            border-radius: 3px;
+        }
+        
+        .progress-text {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        /* 返回顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(145deg, var(--primary), var(--gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 6px 15px rgba(139, 69, 19, 0.4);
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.6);
+            background: linear-gradient(145deg, var(--gold), var(--primary-dark));
+        }
+        
+        .back-to-top::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(145deg, var(--gold-light), transparent);
+            opacity: 0.4;
+            animation: pulse 2s infinite;
+            z-index: -1;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.4; }
+            50% { transform: scale(1.2); opacity: 0.2; }
+            100% { transform: scale(1); opacity: 0.4; }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            html {
+                font-size: 15px;
+            }
+            
+            .container {
+                padding: 1.5rem 0.8rem;
+            }
+            
+            .header {
+                padding: 1.5rem 0;
+            }
+            
+            .school-icon {
+                width: 85px;
+                height: 85px;
+            }
+            
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+                max-width: 90%;
+            }
+            
+            .clock-section {
+                padding: 1.5rem;
+            }
+            
+            .clock-container {
+                flex-direction: column;
+            }
+            
+            .clock-info {
+                min-width: 100%;
+            }
+            
+            .analog-clock {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .poem-section {
+                padding: 1.5rem 1rem;
+            }
+            
+            .poem-title {
+                font-size: 1.8rem;
+            }
+            
+            .poem-line {
+                padding-left: 2rem;
+                font-size: 1rem;
+            }
+            
+            .poem-line::before {
+                left: 1rem;
+            }
+            
+            .memory-section {
+                padding: 1.5rem;
+                max-width: 350px;
+            }
+            
+            .gobang-board {
+                grid-template-columns: repeat(15, 18px);
+                grid-template-rows: repeat(15, 18px);
+            }
+            
+            .stone {
+                width: 16px;
+                height: 16px;
+            }
+            
+            .gobang-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .achievements-panel {
+                max-width: 100%;
+                margin-top: 1.5rem;
+            }
+            
+            .back-to-top {
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            html {
+                font-size: 14px;
+            }
+            
+            .container {
+                padding: 1rem 0.5rem;
+            }
+            
+            .school-icon {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .school-icon i {
+                font-size: 2.2rem;
+            }
+            
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .clock-section {
+                padding: 1.2rem;
+            }
+            
+            .clock-title {
+                font-size: 1.5rem;
+            }
+            
+            #currentTime {
+                font-size: 2rem;
+            }
+            
+            #currentDate {
+                font-size: 1rem;
+            }
+            
+            .analog-clock {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .poem-section {
+                padding: 1.2rem 0.8rem;
+            }
+            
+            .poem-title {
+                font-size: 1.6rem;
+            }
+            
+            .poem-subtitle {
+                font-size: 1rem;
+            }
+            
+            .poem-line {
+                padding-left: 1.8rem;
+                margin-bottom: 1.2rem;
+            }
+            
+            .memory-title {
+                font-size: 1.3rem;
+            }
+            
+            .memory-date {
+                font-size: 1.8rem;
+            }
+            
+            .photo-button {
+                padding: 0.9rem 1.8rem;
+                font-size: 1rem;
+            }
+            
+            .gobang-section {
+                padding: 1.5rem 0.5rem;
+            }
+            
+            .gobang-title {
+                font-size: 1.6rem;
+            }
+            
+            .gobang-board {
+                grid-template-columns: repeat(15, 14px);
+                grid-template-rows: repeat(15, 14px);
+            }
+            
+            .stone {
+                width: 12px;
+                height: 12px;
+            }
+            
+            .difficulty-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+                min-width: 85px;
+            }
+            
+            .gobang-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            
+            .gobang-status {
+                font-size: 0.95rem;
+            }
+            
+            .footer-title {
+                font-size: 1.3rem;
+            }
+            
+            .footer-subtitle {
+                font-size: 0.9rem;
+            }
+            
+            .back-to-top {
+                width: 45px;
+                height: 45px;
+                font-size: 1.1rem;
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+        
+        /* 安全区域适配 */
+        @supports (padding: max(0px)) {
+            body {
+                padding-left: max(0.5rem, env(safe-area-inset-left));
+                padding-right: max(0.5rem, env(safe-area-inset-right));
+            }
+            
+            .header, .clock-section, .poem-section, .memory-section, .gobang-section {
+                padding-left: max(1rem, env(safe-area-inset-left));
+                padding-right: max(1rem, env(safe-area-inset-right));
+            }
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section {
+            opacity: 0;
+            animation: fadeIn 0.8s forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <!-- 水墨背景 -->
+    <div class="ink-bg"></div>
+    
+    <!-- 金色粒子 -->
+    <div class="particles"></div>
+    
+    <!-- 加载指示器 -->
+    <div id="loadingIndicator" class="loading">
+        <div class="loading-spinner"></div>
+        <p class="text-xl font-bold" style="color: var(--primary);">页面加载中...</p>
+        <p id="loadingStatus" class="text-gray-600 mt-2">正在准备内容...</p>
+    </div>
+    
+    <!-- 主内容区 -->
+    <div class="container">
+        <!-- 标题区域 -->
+        <header class="header section">
+            <div class="school-icon">
+                <i class="fas fa-school"></i>
+            </div>
+            <h1 class="main-title">
+                <span class="title-char">实</span>
+                <span class="title-char">验</span>
+                <span class="title-char">中</span>
+                <span class="title-char">学</span>
+                <span class="title-char gold">R</span>
+                <span class="title-char">.</span>
+                <span class="title-char gold">I</span>
+                <span class="title-char">.</span>
+                <span class="title-char gold">P</span>
+                <span class="title-char">.</span>
+            </h1>
+            <p class="subtitle">回顾那些监狱时光与神人老师</p>
+        </header>
+        
+        <!-- 时钟区域 -->
+        <section class="clock-section section delay-1">
+            <div class="clock-container">
+                <div class="clock-info">
+                    <div class="clock-header">
+                        <div class="clock-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h2 class="clock-title">当前时间</h2>
+                    </div>
+                    
+                    <div class="time-display">
+                        <div id="currentTime" class="text-4xl font-bold text-primary-dark mb-2">00:00:00</div>
+                        <div id="currentDate" class="text-xl text-gray-700">2025年6月21日 星期六</div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div id="timeAccuracy" class="time-status">
+                            <i class="fas fa-circle-check"></i>
+                            <span>时间已同步</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="analog-clock">
+                    <div class="clock-center"></div>
+                    <div class="hour-hand" id="hourHand"></div>
+                    <div class="minute-hand" id="minuteHand"></div>
+                    <div class="second-hand" id="secondHand"></div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 诗歌区域 -->
+        <section class="poem-section section delay-2">
+            <div class="poem-decoration">
+                <i class="fas fa-feather-alt"></i>
+            </div>
+            
+            <div class="poem-header">
+                <h2 class="poem-title">希达之歌</h2>
+                <p class="poem-subtitle">——送给神秘希达</p>
+            </div>
+            
+            <div class="poem-content">
+                <p class="poem-line">风掠过老槐树的枝桠</p>
+                <p class="poem-line">摇晃起教学楼前的银杏叶</p>
+                <p class="poem-line">您的身影，总在晨光里伫立</p>
+                <p class="poem-line">目送莘莘学子踏入知识的殿堂</p>
+                <p class="poem-line">课堂上，您的声音清朗</p>
+                <p class="poem-line">如清泉流淌在求知的心房</p>
+                <p class="poem-line">作业本上，红色批注似星火</p>
+                <p class="poem-line">点亮了无数迷茫的方向</p>
+                <p class="poem-line">运动会的呐喊，艺术节的欢唱</p>
+                <p class="poem-line">您的笑容比阳光还明亮</p>
+                <p class="poem-line">走廊里的踱步，办公室的灯光</p>
+                <p class="poem-line">藏着对教育最深沉的守望</p>
+                <p class="poem-line">如今，领导已将您带往远方</p>
+                <p class="poem-line">但您播下的种子正在生长</p>
+                <p class="poem-line">那棵您亲手栽种的玉兰树</p>
+                <p class="poem-line">年年绽放着思念的芬芳</p>
+                <p class="poem-line">您的教诲，是不灭的灯塔</p>
+                <p class="poem-line">在我们的人生航程中闪亮</p>
+                <p class="poem-line">老师，您永远是我们心中</p>
+                <p class="poem-line">最温暖的烛光，最坚实的臂膀</p>
+            </div>
+        </section>
+        
+        <!-- 纪念区域 -->
+        <section class="memory-section section delay-3">
+            <div class="memory-icon">
+                <i class="fas fa-calendar-alt"></i>
+            </div>
+            <h3 class="memory-title">制作日期</h3>
+            <p class="memory-date">2025/6/18</p>
+        </section>
+        
+        <!-- 照片链接 -->
+        <div class="text-center">
+            <a href="https://ibb.co/Z1cqpnd5" target="_blank" class="photo-button">
+                <i class="fas fa-image"></i> 点击查看希达帅照
+            </a>
+        </div>
+        
+        <!-- 五子棋游戏区域 - 增强版 -->
+        <section class="gobang-section section">
+            <div class="gobang-header">
+                <h2 class="gobang-title">五子棋对战</h2>
+                <p class="gobang-subtitle">挑战AI！黑子先行，五子连珠即获胜</p>
+            </div>
+            
+            <!-- 难度选择 -->
+            <div class="difficulty-selector">
+                <button class="difficulty-btn active" data-difficulty="easy">简单难度</button>
+                <button class="difficulty-btn" data-difficulty="medium">中等难度</button>
+                <button class="difficulty-btn" data-difficulty="hard">困难难度</button>
+            </div>
+            
+            <div class="gobang-container">
+                <div class="gobang-board-container">
+                    <div class="gobang-board" id="gobangBoard"></div>
+                    
+                    <div class="gobang-status" id="gameStatus">当前难度：简单 | 轮到您下棋（黑子）</div>
+                    
+                    <div class="gobang-controls">
+                        <button class="gobang-btn" id="restartBtn">
+                            <i class="fas fa-redo"></i> 重新开始
+                        </button>
+                        <button class="gobang-btn" id="hintBtn">
+                            <i class="fas fa-lightbulb"></i> 提示
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 成就系统 -->
+                <div class="achievements-panel">
+                    <div class="achievements-header">
+                        <h3 class="achievements-title">成就系统</h3>
+                    </div>
+                    <div id="achievementsList">
+                        <!-- 成就将在这里动态生成 -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 页脚 -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p class="footer-title">实验中学 · 最强监狱</p>
+                <p class="footer-subtitle">铭记那些监狱时光</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 返回顶部按钮 -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // 创建金色粒子
+        function createParticles() {
+            const container = document.querySelector('.particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // 随机位置
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                
+                // 随机大小和动画时长
+                const size = 2 + Math.random() * 3;
+                const duration = 10 + Math.random() * 20;
+                const delay = Math.random() * 5;
+                
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                
+                container.appendChild(particle);
+            }
+        }
+        
+        // 更新时钟
+        function updateTime() {
+            const now = new Date();
+            
+            // 格式化时间
+            const timeStr = now.toLocaleString('zh-CN', {
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit',
+                hour12: false
+            });
+            
+            const dateStr = now.toLocaleDateString('zh-CN', {
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                weekday: 'long'
+            });
+            
+            document.getElementById('currentTime').textContent = timeStr;
+            document.getElementById('currentDate').textContent = dateStr;
+            
+            // 更新时钟指针
+            const seconds = now.getSeconds();
+            const minutes = now.getMinutes();
+            const hours = now.getHours() % 12;
+            
+            const secondDeg = seconds * 6;
+            const minuteDeg = minutes * 6 + seconds * 0.1;
+            const hourDeg = hours * 30 + minutes * 0.5;
+            
+            document.getElementById('secondHand').style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
+            document.getElementById('minuteHand').style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+            document.getElementById('hourHand').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+            
+            // 更新时间同步状态
+            const timeAccuracy = document.getElementById('timeAccuracy');
+            if (navigator.onLine) {
+                timeAccuracy.innerHTML = '<i class="fas fa-circle-check"></i> 时间已同步';
+                timeAccuracy.style.background = 'linear-gradient(to right, #e8f5e9, #c8e6c9)';
+                timeAccuracy.style.color = '#2e7d32';
+            } else {
+                timeAccuracy.innerHTML = '<i class="fas fa-circle-exclamation"></i> 设备本地时间';
+                timeAccuracy.style.background = 'linear-gradient(to right, #ffecb3, #ffe082)';
+                timeAccuracy.style.color = '#f57f17';
+            }
+        }
+        
+        // 五子棋游戏逻辑
+        document.addEventListener('DOMContentLoaded', () => {
+            const board = document.getElementById('gobangBoard');
+            const gameStatus = document.getElementById('gameStatus');
+            const restartBtn = document.getElementById('restartBtn');
+            const hintBtn = document.getElementById('hintBtn');
+            const achievementsList = document.getElementById('achievementsList');
+            const difficultyBtns = document.querySelectorAll('.difficulty-btn');
+            const backToTopBtn = document.getElementById('backToTop');
+            
+            // 监听滚动事件
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            });
+            
+            // 点击返回顶部
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // 游戏状态变量
+            let currentPlayer = 'black'; // 'black' 或 'white'
+            let gameActive = true;
+            let boardState = Array(15).fill().map(() => Array(15).fill(null));
+            let currentDifficulty = 'easy'; // 'easy', 'medium', 'hard'
+            
+            // 成就系统数据
+            let achievements = {
+                easyWins: 0,
+                mediumWins: 0,
+                hardWins: 0,
+                totalGames: 0,
+                winStreak: 0,
+                longestWinStreak: 0,
+                totalMoves: 0
+            };
+            
+            // 从localStorage加载成就数据
+            function loadAchievements() {
+                const savedAchievements = localStorage.getItem('gobangAchievements');
+                if (savedAchievements) {
+                    achievements = JSON.parse(savedAchievements);
+                }
+                renderAchievements();
+            }
+            
+            // 保存成就数据到localStorage
+            function saveAchievements() {
+                localStorage.setItem('gobangAchievements', JSON.stringify(achievements));
+            }
+            
+            // 渲染成就系统
+            function renderAchievements() {
+                achievementsList.innerHTML = '';
+                
+                const achievementData = [
+                    {
+                        id: 'easyWins',
+                        icon: 'fas fa-chess-pawn',
+                        name: '新手入门',
+                        desc: '在简单难度下获胜',
+                        progress: achievements.easyWins,
+                        target: 5
+                    },
+                    {
+                        id: 'mediumWins',
+                        icon: 'fas fa-chess-knight',
+                        name: '进阶高手',
+                        desc: '在中等难度下获胜',
+                        progress: achievements.mediumWins,
+                        target: 3
+                    },
+                    {
+                        id: 'hardWins',
+                        icon: 'fas fa-chess-queen',
+                        name: '大师风范',
+                        desc: '在困难难度下获胜',
+                        progress: achievements.hardWins,
+                        target: 1
+                    },
+                    {
+                        id: 'totalGames',
+                        icon: 'fas fa-gamepad',
+                        name: '持之以恒',
+                        desc: '完成游戏总局数',
+                        progress: achievements.totalGames,
+                        target: 10
+                    },
+                    {
+                        id: 'winStreak',
+                        icon: 'fas fa-trophy',
+                        name: '连胜之王（你无法获取这个成就哟～）',
+                        desc: '当前连胜次数',
+                        progress: achievements.winStreak,
+                        target: 1145141919810
+                    }
+                ];
+                
+                achievementData.forEach(ach => {
+                    const progressPercent = Math.min(100, (ach.progress / ach.target) * 100);
+                    
+                    const achievementEl = document.createElement('div');
+                    achievementEl.className = 'achievement';
+                    achievementEl.innerHTML = `
+                        <div class="achievement-icon">
+                            <i class="${ach.icon}"></i>
+                        </div>
+                        <div class="achievement-info">
+                            <div class="achievement-name">${ach.name}</div>
+                            <div class="achievement-desc">${ach.desc}</div>
+                            <div class="achievement-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: ${progressPercent}%"></div>
+                                </div>
+                                <div class="progress-text">${ach.progress}/${ach.target}</div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    achievementsList.appendChild(achievementEl);
+                });
+            }
+            
+            // 更新成就
+            function updateAchievement(type) {
+                achievements.totalGames++;
+                
+                if (type === 'win') {
+                    achievements.winStreak++;
+                    achievements.longestWinStreak = Math.max(achievements.longestWinStreak, achievements.winStreak);
+                    
+                    if (currentDifficulty === 'easy') achievements.easyWins++;
+                    if (currentDifficulty === 'medium') achievements.mediumWins++;
+                    if (currentDifficulty === 'hard') achievements.hardWins++;
+                } else if (type === 'lose') {
+                    achievements.winStreak = 0;
+                }
+                
+                saveAchievements();
+                renderAchievements();
+            }
+            
+            // 初始化棋盘
+            function initializeBoard() {
+                board.innerHTML = '';
+                for (let row = 0; row < 15; row++) {
+                    for (let col = 0; col < 15; col++) {
+                        const cell = document.createElement('div');
+                        cell.classList.add('gobang-cell');
+                        cell.dataset.row = row;
+                        cell.dataset.col = col;
+                        cell.addEventListener('click', () => cellClick(row, col));
+                        board.appendChild(cell);
+                    }
+                }
+                
+                boardState = Array(15).fill().map(() => Array(15).fill(null));
+                currentPlayer = 'black';
+                gameActive = true;
+                gameStatus.textContent = `当前难度：${getDifficultyName()} | 轮到您下棋（黑子）`;
+            }
+            
+            // 获取难度名称
+            function getDifficultyName() {
+                switch(currentDifficulty) {
+                    case 'easy': return '简单';
+                    case 'medium': return '中等';
+                    case 'hard': return '困难';
+                    default: return '简单';
+                }
+            }
+            
+            // 处理玩家点击
+            function cellClick(row, col) {
+                if (!gameActive || boardState[row][col] !== null) return;
+                
+                // 玩家落子
+                placeStone(row, col, currentPlayer);
+                boardState[row][col] = currentPlayer;
+                achievements.totalMoves++;
+                
+                // 检查玩家是否获胜
+                if (checkWin(row, col, currentPlayer)) {
+                    gameStatus.textContent = `恭喜您在${getDifficultyName()}难度下获胜！`;
+                    gameActive = false;
+                    updateAchievement('win');
+                    return;
+                }
+                
+                // 切换到AI
+                currentPlayer = 'white';
+                gameStatus.textContent = `AI思考中（${getDifficultyName()}难度）...`;
+                
+                // AI落子（延迟0.5秒）
+                setTimeout(() => {
+                    const [aiRow, aiCol] = getAIMove();
+                    placeStone(aiRow, aiCol, 'white');
+                    boardState[aiRow][aiCol] = 'white';
+                    achievements.totalMoves++;
+                    
+                    // 检查AI是否获胜
+                    if (checkWin(aiRow, aiCol, 'white')) {
+                        gameStatus.textContent = `AI在${getDifficultyName()}难度下获胜！再试一次吧！`;
+                        gameActive = false;
+                        updateAchievement('lose');
+                        return;
+                    }
+                    
+                    // 切换回玩家
+                    currentPlayer = 'black';
+                    gameStatus.textContent = `当前难度：${getDifficultyName()} | 轮到您下棋（黑子）`;
+                }, 500);
+            }
+            
+            // 放置棋子
+            function placeStone(row, col, player) {
+                const cell = document.querySelector(`.gobang-cell[data-row="${row}"][data-col="${col}"]`);
+                const stone = document.createElement('div');
+                stone.classList.add('stone', player);
+                cell.appendChild(stone);
+                
+                // 添加落子动画
+                stone.style.transform = 'scale(0)';
+                setTimeout(() => {
+                    stone.style.transition = 'transform 0.3s ease';
+                    stone.style.transform = 'scale(1)';
+                }, 10);
+            }
+            
+            // 获取AI移动位置
+            function getAIMove() {
+                // 根据难度选择策略
+                switch(currentDifficulty) {
+                    case 'easy':
+                        return getEasyAIMove();
+                    case 'medium':
+                        return getMediumAIMove();
+                    case 'hard':
+                        return getHardAIMove();
+                    default:
+                        return getEasyAIMove();
+                }
+            }
+            
+            // 简单AI：随机落子
+            function getEasyAIMove() {
+                const possibleMoves = [];
+                for (let row = 0; row < 15; row++) {
+                    for (let col = 0; col < 15; col++) {
+                        if (boardState[row][col] === null) {
+                            possibleMoves.push([row, col]);
+                        }
+                    }
+                }
+                
+                if (possibleMoves.length > 0) {
+                    return possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+                }
+                
+                return [7, 7];
+            }
+            
+            // 中等AI：基本攻防策略
+            function getMediumAIMove() {
+                // 1. 检查AI是否即将获胜
+                for (let row = 0; row < 15; row++) {
+                    for (let col = 0; col < 15; col++) {
+                        if (boardState[row][col] === null) {
+                            boardState[row][col] = 'white';
+                            if (checkWin(row, col, 'white')) {
+                                boardState[row][col] = null;
+                                return [row, col];
+                            }
+                            boardState[row][col] = null;
+                        }
+                    }
+                }
+                
+                // 2. 阻止玩家即将获胜
+                for (let row = 0; row < 15; row++) {
+                    for (let col = 0; col < 15; col++) {
+                        if (boardState[row][col] === null) {
+                            boardState[row][col] = 'black';
+                            if (checkWin(row, col, 'black')) {
+                                boardState[row][col] = null;
+                                return [row, col];
+                            }
+                            boardState[row][col] = null;
+                        }
+                    }
+                }
+                
+                // 3. 随机选择靠近现有棋子的位置
+                const possibleMoves = [];
+                for (let row = 0; row < 15; row++) {
+                    for (let col = 0; col < 15; col++) {
+                        if (boardState[row][col] === null && hasNeighbor(row, col)) {
+                            possibleMoves.push([row, col]);
+                        }
+                    }
+                }
+                
+                if (possibleMoves.length > 0) {
+                    return possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+                }
+                
+                // 4. 如果棋盘为空，选择中心附近位置
+                return [7, 7];
+            }
+            
+            // 困难AI：使用评估函数
+            function getHardAIMove() {
+                // 1. 检查AI是否即将获胜
+                for (let row = 0; row < 15; row++) {
+                    for (let col = 0; col < 15; col++) {
+                        if (boardState[row][col] === null) {
+                            boardState[row][col] = 'white';
+                            if (checkWin(row, col, 'white')) {
+                                boardState[row][col] = null;
+                                return [row, col];
+                            }
+                            boardState[row][col] = null;
+                        }
+                    }
+                }
+                
+                // 2. 阻止玩家即将获胜
+                for (let row = 0; row < 15; row++) {
+                    for (let col = 0; col < 15; col++) {
+                        if (boardState[row][col] === null) {
+                            boardState[row][col] = 'black';
+                            if (checkWin(row, col, 'black')) {
+                                boardState[row][col] = null;
+                                return [row, col];
+                            }
+                            boardState[row][col] = null;
+                        }
+                    }
+                }
+                
+                // 3. 使用评估函数寻找最佳位置
+                let bestScore = -Infinity;
+                let bestMove = [7, 7];
+                
+                for (let row = 0; row < 15; row++) {
+                    for (let col = 0; col < 15; col++) {
+                        if (boardState[row][col] === null && hasNeighbor(row, col)) {
+                            const score = evaluatePosition(row, col, 'white');
+                            if (score > bestScore) {
+                                bestScore = score;
+                                bestMove = [row, col];
+                            }
+                        }
+                    }
+                }
+                
+                return bestMove;
+            }
+            
+            // 评估位置得分
+            function evaluatePosition(row, col, player) {
+                let score = 0;
+                
+                // 检查方向：水平、垂直、两个对角线
+                const directions = [
+                    [[0, 1], [0, -1]],   // 水平
+                    [[1, 0], [-1, 0]],   // 垂直
+                    [[1, 1], [-1, -1]],  // 对角线 /
+                    [[1, -1], [-1, 1]]   // 对角线 \
+                ];
+                
+                for (const [dir1, dir2] of directions) {
+                    let playerCount = 1; // 当前位置
+                    let emptyCount = 0;
+                    
+                    // 正向检查
+                    let r = row + dir1[0];
+                    let c = col + dir1[1];
+                    while (r >= 0 && r < 15 && c >= 0 && c < 15) {
+                        if (boardState[r][c] === player) playerCount++;
+                        else if (boardState[r][c] === null) emptyCount++;
+                        else break;
+                        r += dir1[0];
+                        c += dir1[1];
+                    }
+                    
+                    // 反向检查
+                    r = row + dir2[0];
+                    c = col + dir2[1];
+                    while (r >= 0 && r < 15 && c >= 0 && c < 15) {
+                        if (boardState[r][c] === player) playerCount++;
+                        else if (boardState[r][c] === null) emptyCount++;
+                        else break;
+                        r += dir2[0];
+                        c += dir2[1];
+                    }
+                    
+                    // 根据连子数和空位计算得分
+                    if (playerCount >= 4) score += 1000;
+                    else if (playerCount === 3 && emptyCount >= 2) score += 100;
+                    else if (playerCount === 2 && emptyCount >= 3) score += 10;
+                }
+                
+                // 中心位置加成
+                const centerDist = Math.abs(row - 7) + Math.abs(col - 7);
+                score += (14 - centerDist) * 2;
+                
+                return score;
+            }
+            
+            // 检查是否有邻居棋子
+            function hasNeighbor(row, col) {
+                for (let i = Math.max(0, row - 2); i <= Math.min(14, row + 2); i++) {
+                    for (let j = Math.max(0, col - 2); j <= Math.min(14, col + 2); j++) {
+                        if (boardState[i][j] !== null) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+            
+            // 检查是否获胜
+            function checkWin(row, col, player) {
+                // 检查方向：水平、垂直、两个对角线
+                const directions = [
+                    [[0, 1], [0, -1]],   // 水平
+                    [[1, 0], [-1, 0]],   // 垂直
+                    [[1, 1], [-1, -1]],  // 对角线 /
+                    [[1, -1], [-1, 1]]   // 对角线 \
+                ];
+                
+                for (const [dir1, dir2] of directions) {
+                    let count = 1; // 当前位置已经有一个棋子
+                    
+                    // 正向检查
+                    count += countDirection(row, col, dir1[0], dir1[1], player);
+                    // 反向检查
+                    count += countDirection(row, col, dir2[0], dir2[1], player);
+                    
+                    if (count >= 5) return true;
+                }
+                
+                return false;
+            }
+            
+            // 计算某个方向的连续棋子数
+            function countDirection(row, col, dx, dy, player) {
+                let count = 0;
+                let r = row + dx;
+                let c = col + dy;
+                
+                while (r >= 0 && r < 15 && c >= 0 && c < 15 && boardState[r][c] === player) {
+                    count++;
+                    r += dx;
+                    c += dy;
+                }
+                
+                return count;
+            }
+            
+            // 重新开始游戏
+            restartBtn.addEventListener('click', () => {
+                initializeBoard();
+                achievements.totalGames++;
+                saveAchievements();
+                renderAchievements();
+            });
+            
+            // 提示功能
+            hintBtn.addEventListener('click', () => {
+                if (!gameActive || currentPlayer !== 'black') return;
+                
+                const [hintRow, hintCol] = getAIMove();
+                const cell = document.querySelector(`.gobang-cell[data-row="${hintRow}"][data-col="${hintCol}"]`);
+                
+                // 添加提示效果
+                const hint = document.createElement('div');
+                hint.style.width = '20px';
+                hint.style.height = '20px';
+                hint.style.border = '2px solid red';
+                hint.style.borderRadius = '50%';
+                hint.style.position = 'absolute';
+                hint.style.zIndex = '1';
+                hint.style.animation = 'pulse 1s infinite';
+                
+                cell.appendChild(hint);
+                
+                // 3秒后移除提示
+                setTimeout(() => {
+                    if (cell.contains(hint)) {
+                        cell.removeChild(hint);
+                    }
+                }, 3000);
+            });
+            
+            // 难度选择
+            difficultyBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    difficultyBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentDifficulty = btn.dataset.difficulty;
+                    initializeBoard();
+                });
+            });
+            
+            // 初始化游戏和成就系统
+            initializeBoard();
+            loadAchievements();
+        });
+        
+        // 初始化页面
+        window.addEventListener('load', () => {
+            // 隐藏加载指示器
+            setTimeout(() => {
+                document.getElementById('loadingIndicator').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loadingIndicator').style.display = 'none';
+                }, 500);
+            }, 1500);
+            
+            // 创建粒子效果
+            createParticles();
+            
+            // 初始更新时间
+            updateTime();
+            
+            // 设置时间更新间隔
+            setInterval(updateTime, 1000);
+        });
+        
+        // 监听网络状态变化
+        window.addEventListener('online', () => {
+            const timeAccuracy = document.getElementById('timeAccuracy');
+            timeAccuracy.innerHTML = '<i class="fas fa-circle-check"></i> 时间已同步';
+            timeAccuracy.style.background = 'linear-gradient(to right, #e8f5e9, #c8e6c9)';
+            timeAccuracy.style.color = '#2e7d32';
+        });
+        
+        window.addEventListener('offline', () => {
+            const timeAccuracy = document.getElementById('timeAccuracy');
+            timeAccuracy.innerHTML = '<i class="fas fa-circle-exclamation"></i> 设备本地时间';
+            timeAccuracy.style.background = 'linear-gradient(to right, #ffecb3, #ffe082)';
+            timeAccuracy.style.color = '#f57f17';
+        });
+    </script>
+</body>
+</html>
