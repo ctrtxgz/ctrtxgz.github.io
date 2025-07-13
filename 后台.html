@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>CN-LaiYangShiYan</title>
+<style>
+/*打字机效果来自deepseek*/
+@keyframes typing {
+    0% { max-width: 0 }
+    70% { max-width: 100% }
+    90% { max-width: 100% }
+    100% { max-width: 0 }
+}
+@keyframes blink {
+    from, to { border-color: transparent }
+    50% { border-color: #000 }
+}
+@keyframes img {from{
+transform:rotate（0deg）;}
+to{transform:rotate(360deg);
+}
+}
+@keyframes rainbow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+#fixed-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+}
+*{
+  text-align: center;
+}
+p {
+    font-weight: bold;
+    font-size: 35px;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid #000;
+    color:white;
+    max-width: 0;
+    margin: 0 auto;
+    display: inline-block;
+    animation:
+        typing 2s steps(30, end) infinite,
+        blink 0.4s step-end infinite;
+}
+.rainbow{
+  font-size: 50px;
+  font-weight: bold;
+  background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet, red);
+  background-size: 200% auto;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: rainbow 5s linear infinite;
+}
+body {
+margin: 0;
+  min-height: 100vh;
+  background-position: center;
+  height: 500px;
+  overflow: hidden;
+}
+button{
+  width:120px;
+  height:45px;
+  color:rgb(153, 0, 255);
+  border-radius:8%;
+  background-color: lightblue;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid #1e3a8a;
+}
+input {
+  margin: 10px 0;
+  padding: 5px;
+  border-radius:10%;
+}
+.img{
+  width: 200px;
+  height: 200px;
+  border: none;
+  border-radius: 50%;
+  animation:img 2s linear infinite reverse;
+float:right;
+}
+.img2{
+  width: 200px;
+  height: 200px;
+  border: none;
+  border-radius: 50%;
+  animation:img 2s linear infinite reverse;
+float:left;
+}
+.glass{
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  width: 400px;
+  margin: 50px auto;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+ position: relative; 
+  z-index: 1; 
+}
+</style>
+</head>
+<body>
+<img id="fixed-bg" src="https://imgtu.com/uploads/6n0cecd0/t-img_2806.webp">
+<audio preload="auto" src="https://fs-im-kefu.7moor-fs1.com/ly/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/1752149313412/高燃.mp3" alt="高燃.mp3" title="高燃.mp3" autoplay loop></audio>
+<h1 class="rainbow">实验中学学生信息管理</h1>
+<p>实验中学后台</p>
+<div class="glass">
+ <form action="#">
+ <br>
+ 请输入账号<input type="text" placeholder="账号">
+<br>
+请输入密码<input type="password" placeholder="密码">
+<br>
+请输入邮箱<input type="email" placeholder="邮箱">
+<br>
+选择你的身份&nbsp;&nbsp;
+<input type="radio" name="shenfen">学生
+<input type="radio" name="shenfen">老师
+<br>
+<button type="submit">登录</button>
+<button type="reset">重置</button>
+<br>
+</form>
+</div>
+<img class="img" src="https://imgtu.com/uploads/zfdk86vj/t-img_0700.webp" alt="宋希达" title="宋希达">
+<img class="img2" src="https://imgtu.com/uploads/6hrm2ach/t-img_2800.webp" alt="孙言芝" title="孙言芝">
+</body>
+</html>
